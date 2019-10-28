@@ -77,6 +77,22 @@ rightmost argument first. The return value of the function is placed in the
     call sum_of_three       ; call the function, the result will be in eax
 ~~~
 
+
+You can now create a function `kmain` in a file called `kmain.c` that you call
+from `loader.s`. At this point, `kmain` probably won't need any arguments (but
+in later chapters it will).
+
+Now, you probably want to *call* your new fancy `kmain` function, right?
+
+~~~ {.nasm}
+extern kmain
+call kmain
+~~~
+
+Inside your `loader.s`, inside of the `loader` label.
+This will call into the `kmain` function with no arguments (since it does not expect any currently, and we have not pushed any!), and when it returns it will return back to the loader (and then end up in the infinite loop you created).
+
+
 ### Packing Structs
 In the rest of this book, you will often come across "configuration bytes" that are
 a collection of bits in a very specific order. Below follows an example with 32
@@ -136,9 +152,6 @@ treat warnings as errors:
     -Wall -Wextra -Werror
 ~~~
 
-You can now create a function `kmain` in a file called `kmain.c` that you call
-from `loader.s`. At this point, `kmain` probably won't need any arguments (but
-in later chapters it will).
 
 ## Build Tools
 Now is also probably a good time to set up some build tools to make it easier
